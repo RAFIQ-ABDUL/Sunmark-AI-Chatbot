@@ -39,7 +39,6 @@ To ensure the system remains **stable and performant** for the final assessment 
 
 ### Setup Instructions
 
-**1. [cite_start]Project Structure **
 This repository includes all required configuration files:
 * `uv.lock` and `pyproject.toml` (Python/Backend) 
 * `package.json` (Next.js/Frontend) 
