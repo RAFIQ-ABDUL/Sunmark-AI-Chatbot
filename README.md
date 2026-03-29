@@ -7,7 +7,6 @@ A voice-enabled RAG (Retrieval-Augmented Generation) system providing about Sunm
 * **Backend (Render)**: [https://sunmark-ai-chatbot.onrender.com](https://sunmark-ai-chatbot.onrender.com)
 * *Note: The application will remain live for at least 7 days after submission.*
 
----
 
 ### Architecture Overview
 * **Data Ingestion**: Scraped `https://www.sunmarke.com/` using `crawl4ai` and `LangChain`.
@@ -16,7 +15,7 @@ A voice-enabled RAG (Retrieval-Augmented Generation) system providing about Sunm
 * **Frontend**: `Next.js` with `TypeScript` featuring a dual-column comparison UI.
 * **Voice Integration**: **Web Speech API** for real-time voice-to-text and **SpeechSynthesis** for text-to-voice output.
 
----
+
 
 ### LLM Selection & Justification
 During the development and testing phase, initially implemented **Gemini**, **Kimi**, and **DeepSeek**. However, due to the high volume of testing required to refine the RAG retrieval accuracy and system stability, exhausted the free-tier rate limits and quotas for these providers.
@@ -25,17 +24,6 @@ To ensure the system remains **stable and performant** for the final assessment 
 1.  **Groq**: Selected for its industry-leading inference speed, which is critical for a "live" voice agent experience.
 2.  **OpenRouter**: Selected as a robust fallback to ensure high availability and reliability.
 
----
-
-### Estimated Costs (per 1,000 queries)
-| Service | Estimated Cost | Notes |
-| :--- | :--- | :--- |
-| **Groq API** | $0.00 | Currently utilizing the Free Tier. |
-| **OpenRouter** | ~$0.01 - $0.03 | Based on average token usage for RAG contexts. |
-| **Hosting (Vercel/Render)** | $0.00 | Utilizing Free Tiers. |
-| **Total** | **<$0.05** | Highly cost-efficient for school-scale deployment. |
-
----
 
 ### Setup Instructions
 
