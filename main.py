@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Tuple
 from rag_pipeline import groq_chain, openrouter_chain
+import os
 
 app = FastAPI(title="Sunmark School Chatbot")
 
