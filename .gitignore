@@ -1,0 +1,28 @@
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+.python-version
+uv.lock
+
+# Virtual environments
+.venv
+venv/
+env/
+
+# Environment variables (CRITICAL)
+.env
+.env.local
+
+# Next.js / Frontend
+frontend/.next/
+frontend/node_modules/
+frontend/out/
+frontend/build/
+.DS_Store
+
+# IDEs
+.vscode/
+.idea/
