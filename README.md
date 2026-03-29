@@ -60,6 +60,7 @@ cp .env.example .env
 
 # Run the server
 uvicorn main:app --reload
+```
 
 ### Frontend Setup
 To run the frontend locally for development or testing:
@@ -71,10 +72,10 @@ cd frontend
 npm install
 # Start the development server
 npm run dev
-
+```
 ### Assumptions & Limitations
-Cold Starts: On the Render Free Tier, the backend may take 50+ seconds to "wake up" after a period of inactivity.
+1. **Cold Starts:** On the Render Free Tier, the backend may take 50+ seconds to "wake up" after a period of inactivity.
 
-Voice Compatibility: The voice-to-text feature requires a modern browser with Web Speech API support (Chrome/Edge recommended).
+2. **Voice Compatibility:** The voice-to-text feature requires a modern browser with Web Speech API support (Chrome/Edge recommended).
 
-Data Refresh: The current RAG context is based on a snapshot of the school's website as of March 2026.
+3. **Data Refresh:** The current RAG context is based on a snapshot of the school's website as of March 2026.
