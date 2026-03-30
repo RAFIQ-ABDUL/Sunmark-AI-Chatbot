@@ -41,7 +41,7 @@ export default function SunmarkAIAgent() {
     }
   };
 
-  // --- 2. RAG API Call [cite: 17] ---
+  // RAG API Call 
   const handleQuery = async (queryText: string) => {
     setIsLoading(true);
     try {
