@@ -2,11 +2,6 @@
 
 A voice-enabled RAG (Retrieval-Augmented Generation) system providing about Sunmark School's admissions, curriculum, and facilities. This project compares two high-performance LLMs to ensure the most accurate responses for parents and students.
 
-###  Deployed Application URLs
-* **Frontend (Vercel)**: [https://sunmark-ai-chatbot.vercel.app/](https://sunmark-ai-chatbot.vercel.app/)
-* **Backend (Render)**: [https://sunmark-ai-chatbot.onrender.com](https://sunmark-ai-chatbot.onrender.com)
-* *Note: The application will remain live for at least 7 days after submission.*
-
 
 ### Architecture Overview
 * **Data Ingestion**: Scraped `https://www.sunmarke.com/` using `crawl4ai` and `LangChain`.

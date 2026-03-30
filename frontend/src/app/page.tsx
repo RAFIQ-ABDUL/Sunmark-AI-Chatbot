@@ -45,7 +45,7 @@ export default function SunmarkAIAgent() {
   const handleQuery = async (queryText: string) => {
     setIsLoading(true);
     try {
-      const res = await fetch('https://sunmark-ai-chatbot.onrender.com', {
+      const res = await fetch('http://127.0.0.1:8000/ask', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ input: queryText, chat_history: [] }),
