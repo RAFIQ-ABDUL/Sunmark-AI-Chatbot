@@ -15,11 +15,12 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
+#Data model
 class ChatRequest(BaseModel):
     input: str
     chat_history: List[Tuple[str, str]] = []
 
+#API endpoints
 @app.post("/ask")
 async def ask_question(request: ChatRequest):
     inputs = {
@@ -33,7 +34,7 @@ async def ask_question(request: ChatRequest):
             asyncio.to_thread(groq_chain, inputs),
             asyncio.to_thread(openrouter_chain, inputs)
         )
-
+        #Simulated response structure
         return {
             "query": request.input,
             "responses": {
@@ -42,12 +43,14 @@ async def ask_question(request: ChatRequest):
             }
         }
     except Exception as e:
+        #Logs the error and returns a 500 status code to the client
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/health")
 def health():
     return {"status": "online"}
 
+#Production Entry Point
 if __name__ == "__main__":
     import uvicorn
     port = int(os.environ.get("PORT", 8000)) 
