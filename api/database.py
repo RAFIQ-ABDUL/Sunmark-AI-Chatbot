@@ -37,7 +37,9 @@ def process_and_store():
     embeddings_model = HuggingFaceEmbeddings(model="sentence-transformers/all-MiniLM-L6-v2")
     
     # Load the raw data you fetched earlier
-    with open("raw_data.json", "r", encoding="utf-8") as f:
+    # This looks for the file in the same folder as the script
+    file_path = os.path.join(os.path.dirname(__file__), "raw_data.json")
+    with open(file_path, "r", encoding="utf-8") as f:
         pages = json.load(f)
 
     # 3. Chunking 

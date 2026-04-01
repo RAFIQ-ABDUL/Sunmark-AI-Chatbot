@@ -77,20 +77,6 @@ def create_safe_chain(llm, name):
     except Exception as e:
         return lambda inputs: {"answer": f"[{name} INIT ERROR]: {str(e)}", "status": "error"}
 
-# --- INITIALIZE MODELS ---
-groq_llm = ChatGroq(
-    model="llama-3.3-70b-versatile",
-    groq_api_key=os.getenv("GROQ_API_KEY"),
-    temperature=0.3
-)
-
-openrouter_llm = ChatOpenAI(
-    model="openai/gpt-3.5-turbo",
-    openai_api_key=os.getenv("OPENROUTER_API_KEY"),
-    openai_api_base="https://openrouter.ai/api/v1",
-    temperature=0.5
-)
-
 
 
 # Exportable Chain Functions
