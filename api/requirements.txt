@@ -1,26 +1,18 @@
-# Web Server
-fastapi==0.135.2
-uvicorn==0.42.0
-gunicorn==23.0.0
-python-dotenv==1.2.2
-
-# Orchestration & LLMs
-langchain==1.2.13
-langchain-classic==1.0.3
-langchain-core==1.2.23
-langchain-community==0.4.1
-langchain-groq==1.1.2
-langchain-openai==1.1.12
-langchain-huggingface==1.2.1
-langchain-google-genai==4.2.1
-google-genai==1.68.0
-
-# Database & Vector Store
-langchain-postgres==0.0.17
-psycopg[binary]==3.3.3
-pgvector==0.3.6
-
-# Utilities
-sentence-transformers==5.3.0
-huggingface-hub==1.8.0
-pydantic==2.12.5
+fastapi
+uvicorn
+gunicorn
+python-dotenv
+langchain
+langchain-community
+langchain-core
+langchain-groq
+langchain-openai
+langchain-huggingface
+langchain-google-genai
+google-genai
+langchain-postgres
+psycopg[binary]
+pgvector
+sentence-transformers
+huggingface-hub
+pydantic
