@@ -11,7 +11,7 @@ export default function SunmarkAIAgent() {
   const [isLoading, setIsLoading] = useState(false);
   const recognitionRef = useRef<any>(null);
 
-  // --- 1. Voice-to-Text Setup [cite: 16, 31] ---
+  // --- 1. Voice-to-Text Setup ---
   useEffect(() => {
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (SpeechRecognition) {
@@ -23,7 +23,7 @@ export default function SunmarkAIAgent() {
       recognitionRef.current.onresult = (event: any) => {
         const text = event.results[0][0].transcript;
         setTranscription(text);
-        handleQuery(text); // Requirement: One voice input -> Multiple answers [cite: 26]
+        handleQuery(text); 
       };
 
       recognitionRef.current.onend = () => setIsRecording(false);
@@ -41,25 +41,37 @@ export default function SunmarkAIAgent() {
     }
   };
 
-  // RAG API Call 
+  // --- 2. RAG API Call (Updated for Production) ---
   const handleQuery = async (queryText: string) => {
     setIsLoading(true);
+    
+    // Uses Vercel Env Var in production, defaults to localhost for development
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
+
     try {
-      const res = await fetch('/api/ask', {
+      const res = await fetch(`${backendUrl}/ask`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ input: queryText, chat_history: [] }),
+        // Sending empty history for now, can be updated to track state
+        body: JSON.stringify({ 
+            input: queryText, 
+            chat_history: [] 
+        }),
       });
+
+      if (!res.ok) throw new Error(`Server responded with ${res.status}`);
+
       const data: ApiResponse = await res.json();
       setResponses(data.responses);
     } catch (error) {
       console.error("Backend Error:", error);
+      // Optional: Set an error state here to show in the UI
     } finally {
       setIsLoading(false);
     }
   };
 
-  // --- 3. Text-to-Voice Controls [cite: 24, 35] ---
+  // --- 3. Text-to-Voice Controls ---
   const speak = (text: string | undefined) => {
     if (!text) return;
     window.speechSynthesis.cancel(); 
@@ -91,7 +103,7 @@ export default function SunmarkAIAgent() {
           <h1 className="text-3xl font-bold text-slate-800">Sunmark School AI</h1>
         </div>
 
-        {/* Voice Recording Button [cite: 31] */}
+        {/* Voice Recording Button */}
         <section className="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 mb-8 text-center">
           <button
             onClick={toggleRecording}
@@ -106,12 +118,12 @@ export default function SunmarkAIAgent() {
               {isRecording ? "Recording..." : "Click to Ask a Question"}
             </p>
             <p className="mt-2 text-lg text-slate-700 font-medium italic">
-              {transcription || "Transcribed query will appear here..."} [cite: 32]
+              {transcription || "Transcribed query will appear here..."}
             </p>
           </div>
         </section>
 
-        {/* 2-Column Multi-Model Comparison [cite: 25, 33] */}
+        {/* 2-Column Multi-Model Comparison */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {[
             { key: 'groq', label: 'Groq (Llama 3.3)' },
@@ -119,18 +131,19 @@ export default function SunmarkAIAgent() {
           ].map((model) => (
             <div key={model.key} className="bg-white rounded-xl shadow-md border border-slate-200 flex flex-col min-h-[450px]">
               <div className="p-4 border-b bg-slate-50 rounded-t-xl font-bold text-slate-600">
-                {model.label} [cite: 34]
+                {model.label}
               </div>
               
               <div className="p-6 flex-grow overflow-y-auto text-slate-600 leading-relaxed">
                 {isLoading ? (
                   <div className="flex flex-col items-center justify-center h-full gap-2 text-slate-400">
                     <Loader2 className="animate-spin text-indigo-500" />
-                    <span className="text-xs">Processing RAG...</span> [cite: 36]
+                    <span className="text-xs">Processing RAG...</span>
                   </div>
                 ) : responses ? (
                   <div className="animate-in fade-in duration-700">
-                    {responses[model.key as keyof typeof responses].answer}
+                    {/* Accessing keys safely using type casting */}
+                    {(responses as any)[model.key]?.answer || "No response received."}
                   </div>
                 ) : (
                   <div className="h-full flex items-center justify-center text-slate-300 italic">
@@ -139,11 +152,11 @@ export default function SunmarkAIAgent() {
                 )}
               </div>
 
-              {/* Independent Audio Controls [cite: 35, 36] */}
+              {/* Independent Audio Controls */}
               <div className="p-4 border-t bg-slate-50/50 flex flex-wrap gap-2">
                 <button
                   disabled={!responses || isLoading}
-                  onClick={() => speak(responses?.[model.key as keyof typeof responses]?.answer)}
+                  onClick={() => speak((responses as any)?.[model.key]?.answer)}
                   className="flex-1 flex items-center justify-center gap-2 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors disabled:opacity-40 font-medium"
                 >
                   <Volume2 size={16} /> Play
