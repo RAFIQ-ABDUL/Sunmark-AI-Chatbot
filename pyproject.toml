@@ -8,6 +8,7 @@ dependencies = [
     "crawl4ai>=0.8.6",
     "fastapi>=0.135.2",
     "google-genai>=1.68.0",
+    "google-generativeai>=0.8.6",
     "langchain>=1.2.13",
     "langchain-community>=0.4.1",
     "langchain-google-genai>=4.2.1",

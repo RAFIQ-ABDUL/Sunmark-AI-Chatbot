@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEndpointEmbeddings
 from langchain_postgres import PGVector
 from langchain_openai import ChatOpenAI
 from langchain_groq import ChatGroq
@@ -12,7 +12,11 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 load_dotenv()
 
 
-embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+embeddings = HuggingFaceEndpointEmbeddings(
+    model="sentence-transformers/all-MiniLM-L6-v2",
+    task="feature-extraction",
+    huggingfacehub_api_token=os.getenv("HUGGINGFACE_API_KEY") 
+)
 vectorstore = PGVector(
     embeddings=embeddings,
     collection_name="sunmark_docs",

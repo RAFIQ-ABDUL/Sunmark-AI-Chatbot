@@ -11,8 +11,6 @@ langchain-huggingface
 langchain-google-genai
 google-genai
 langchain-postgres
-psycopg[binary]
+psycopg2-binary
 pgvector
-sentence-transformers
-huggingface-hub
 pydantic
