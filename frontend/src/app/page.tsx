@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Mic, MicOff, Volume2, Loader2, School, Square, Pause } from 'lucide-react';
+import Markdown from 'react-markdown'; // Ensure this is installed: npm install react-markdown
 import { ApiResponse } from '../../types';
 
 export default function SunmarkAIAgent() {
@@ -41,18 +42,15 @@ export default function SunmarkAIAgent() {
     }
   };
 
-  // --- 2. RAG API Call (Updated for Production) ---
+  // --- 2. RAG API Call ---
   const handleQuery = async (queryText: string) => {
     setIsLoading(true);
-    
-    // Uses Vercel Env Var in production, defaults to localhost for development
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
 
     try {
       const res = await fetch(`${backendUrl}/ask`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        // Sending empty history for now, can be updated to track state
         body: JSON.stringify({ 
             input: queryText, 
             chat_history: [] 
@@ -65,7 +63,6 @@ export default function SunmarkAIAgent() {
       setResponses(data.responses);
     } catch (error) {
       console.error("Backend Error:", error);
-      // Optional: Set an error state here to show in the UI
     } finally {
       setIsLoading(false);
     }
@@ -134,16 +131,18 @@ export default function SunmarkAIAgent() {
                 {model.label}
               </div>
               
-              <div className="p-6 flex-grow overflow-y-auto text-slate-600 leading-relaxed">
+              <div className="p-6 flex-grow overflow-y-auto">
                 {isLoading ? (
                   <div className="flex flex-col items-center justify-center h-full gap-2 text-slate-400">
                     <Loader2 className="animate-spin text-indigo-500" />
                     <span className="text-xs">Processing RAG...</span>
                   </div>
                 ) : responses ? (
-                  <div className="animate-in fade-in duration-700">
-                    {/* Accessing keys safely using type casting */}
-                    {(responses as any)[model.key]?.answer || "No response received."}
+                  <div className="animate-in fade-in duration-700 markdown-container">
+                    {/* The Markdown component renders the raw text as formatted HTML */}
+                    <Markdown>
+                      {(responses as any)[model.key]?.answer || "No response received."}
+                    </Markdown>
                   </div>
                 ) : (
                   <div className="h-full flex items-center justify-center text-slate-300 italic">
@@ -152,7 +151,7 @@ export default function SunmarkAIAgent() {
                 )}
               </div>
 
-              {/* Independent Audio Controls */}
+              {/* Audio Controls */}
               <div className="p-4 border-t bg-slate-50/50 flex flex-wrap gap-2">
                 <button
                   disabled={!responses || isLoading}
