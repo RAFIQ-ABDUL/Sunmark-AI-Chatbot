@@ -13,9 +13,8 @@ A voice-enabled RAG (Retrieval-Augmented Generation) system providing about Sunm
 
 
 ### LLM Selection & Justification
-During the development and testing phase, initially implemented **Gemini**, **Kimi**, and **DeepSeek**. However, due to the high volume of testing required to refine the RAG retrieval accuracy and system stability, exhausted the free-tier rate limits and quotas for these providers.
 
-To ensure the system remains **stable and performant** for the final assessment and live demo, pivoted to **Groq (llama-3.3-70b-versatile)** and **OpenRouter (openai/gpt-3.5-turbo)**:
+Used **Groq (llama-3.3-70b-versatile)** and **OpenRouter (openai/gpt-3.5-turbo)** for LLM inference:
 1.  **Groq**: Selected for its industry-leading inference speed, which is critical for a "live" voice agent experience.
 2.  **OpenRouter**: Selected as a robust fallback to ensure high availability and reliability.
 
@@ -56,8 +55,7 @@ npm install
 npm run dev
 ```
 ### Assumptions & Limitations
-1. **Cold Starts:** On the Render Free Tier, the backend may take 50+ seconds to "wake up" after a period of inactivity.
 
-2. **Voice Compatibility:** The voice-to-text feature requires a modern browser with Web Speech API support (Chrome/Edge recommended).
+1. **Voice Compatibility:** The voice-to-text feature requires a modern browser with Web Speech API support (Chrome/Edge recommended).
 
-3. **Data Refresh:** The current RAG context is based on a snapshot of the school's website as of March 2026.
+2. **Data Refresh:** The current RAG context is based on a snapshot of the school's website as of March 2026.
